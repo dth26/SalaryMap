@@ -3,23 +3,75 @@
 {% block content %}
 
 <style>
-/*	.nav{
-		border: 1px solid red;
-		margin: 0px;
-	}*/
+
+
 
 </style>
 
 <div class="row">
-    <div class="col-sm-10">
+    <div class="col-sm-10 same-height-col">
         <div id="map-canvas"></div>
     </div>
-    <div class="col-sm-2" id="right-panel">
+    <div class="col-sm-2 same-height-col" id="right-panel">
 		<ul class="nav nav-tabs" id="right-panel-menu">
 		  <li role="presentation" class="active"><a href="#">Filter</a></li>
 		  <li role="presentation"><a href="#">Salary</a></li>
 		  <li role="presentation"><a href="#">Other</a></li>
 		</ul>
+
+		<form >
+			<ul class="right-panel-form">
+				<li class="li-border">
+				    <label for="searchPhraseIn">Job Title</label>
+				    <input id="searchPhraseIn" type="text" name="searchPhraseIn" placeholder="Type Job Title Here" maxlength="100">
+				    <br><br>
+				    <span>Ex. Software Engineer, Accountant, Human Resources</span>
+				</li>
+				<br><br><br>
+				<li class="li-border">
+				    <label for="cityIn">Locations</label>
+
+<!-- 					<select name="cityIn" class="form-control" style="width: 100%;">
+						<optgroup label="PA">
+							<option>Pittsburgh</option>
+							<option>Philadelphia</option>
+						</optgroup>
+						<optgroup label="CA">
+							<option>San Francisco</option>
+							<option>San Diego</option>
+						</optgroup>
+					</select> 
+-->
+					<div class="row">
+						<div class="row inner-panel">
+	 						<div class="col-sm-9 added-city">
+								<p class="center"><i>Philadelphia</i></p>
+							</div>
+							<div class="col-sm-3 added-city">
+								<span class="glyphicon glyphicon-remove center"></span>
+							</div>
+							<div class="col-sm-9 added-city">
+								<p class="center city-selected"><i>Pittsburgh</i><p>
+							</div>
+							<div class="col-sm-3 added-city">
+								<span class="glyphicon glyphicon-plus center"></span>
+							</div> 
+						</div>
+					</div>
+					<br><br>
+					<span>Cities your're searching for work in</span>
+				</li>
+				<br>
+				<li>
+				  <button type="button" class="btn btn-default btn-lg" style="width:100%">Filter</button>
+				</li>
+
+			</ul>
+
+		</form>
+
+
+
     	<!-- <form class="form-inline">
 		  <div class="form-group">
 		    <label for="searchPhraseIn">Job Title</label>
@@ -34,3 +86,4 @@
     </div> 
 </div>
 {% endblock %}
+
