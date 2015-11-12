@@ -23,34 +23,34 @@ $('.filter').on('click', getJobs);
 /*, 
 	get jobs in city for occupation
 */
-function getJobs(){
+// function getJobs(){
 
-	var jobTitle = $.trim($('#searchPhraseIn').val());
-	var searchLimit = 10;
-	var params, state, city;
+// 	var jobTitle = $.trim($('#searchPhraseIn').val());
+// 	var searchLimit = 10;
+// 	var params, state, city;
 
 
-	// locations in base.js
-	// contains the cities that the user wants to search
-	for(var i=0; i<locations.length ;i++)
-	{
-		city = locations[i];
-		state = states[city];
+// 	// locations in base.js
+// 	// contains the cities that the user wants to search
+// 	for(var i=0; i<locations.length ;i++)
+// 	{
+// 		city = locations[i];
+// 		state = states[city];
 
-		params = {
-			'action': 'employers',
-			'pn': 1,
-			'city': city,
-			'state': state,
-			'country': 'USA',
-			'q': jobTitle,				// can be any combination of employer or occupation
-			'ps': searchLimit			// number of employers returned
-		}; 
+// 		params = {
+// 			'action': 'employers',
+// 			'pn': 1,
+// 			'city': city,
+// 			'state': state,
+// 			'country': 'USA',
+// 			'q': jobTitle,				// can be any combination of employer or occupation
+// 			'ps': searchLimit			// number of employers returned
+// 		}; 
 
-		requestToGlassdoor(params);
-	}
+// 		requestToGlassdoor(params);
+// 	}
 
-}
+// }
 
 
 function requestToGlassdoor(params){
@@ -74,10 +74,6 @@ function requestToGlassdoor(params){
 	    		get the coordinates of this location to pass to the google.places request. Right now I simply pass the
 	    		city that the user select such as 'Philadelphia', 'Pittsburgh'
 			*/
-
-
-			//printJSON(data.response.employers);
-
 			// iterate through list of employers for current page
 			for(var i=0; i<employers.length && i<10; i++)
 			{
@@ -87,7 +83,6 @@ function requestToGlassdoor(params){
 				Glassdoor only returns the name of the employee and the city, state
 				getAddressOfBusiness() gets the exact address
 	    		*/
-	    		//alert(companyName + ' ' + companyLoc);
 	    		getAddressOfBusiness(params.city, companyLoc, companyName);
 			}
 
@@ -111,14 +106,36 @@ function requestToGlassdoor(params){
 }
 
 
-/*
-	Iterate through list of employees for current page
-*/
-function iterateEmployers(){
 
+function getJobs(){
+	var jobTitle = $.trim($('#searchPhraseIn').val());
+	var totalLoc = locations.length;					// total number of cities user wants searched
+
+	scrapeGlassdoor(0, totalLoc, jobTitle);
 }
 
 
+
+// scrape glassdoor
+function scrapeGlassdoor(curr, totalLoc, jobTitle){
+
+	city = locations[curr++];
+	state = states[city];
+
+	$.ajax({
+		url: '/scrapeGlassdoor?city=' + city + '&searchPhraseIn' + jobTitle,
+		method: 'GET',
+		dataType: 'json',
+		success: function(data){
+
+			if(curr <= totalLoc-1)
+			{
+				scrapeGlassdoor(curr, totalLoc, jobTitle);
+			}
+		}
+	});
+	
+}
 
 
 
