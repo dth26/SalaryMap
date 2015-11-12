@@ -2,11 +2,17 @@
 
 {% block content %}
 
-<style>
+<!--
 
+	Click 'Filter' call chain
 
-
-</style>
+	1) jobs.js : getJobs()
+	2) jobs.js : requestToGlassdoor(params)
+	3) geocoding.js : getAddressOfBusiness(city, company)
+	4) geocoding.js : getCoordinates(placeId, address, company, city)
+	5) geocoding.js : addMarker(myLatlng, company, city)
+	
+-->
 
 <div class="row">
     <div class="col-sm-10 same-height-col">
@@ -48,13 +54,13 @@
 								<p class="center"><i>Philadelphia</i></p>
 							</div>
 							<div class="col-sm-3 added-city">
-								<span class="glyphicon glyphicon-remove center"></span>
+								<span class="glyphicon glyphicon-plus center" data-loc="Philadelphia"></span>
 							</div>
 							<div class="col-sm-9 added-city">
 								<p class="center city-selected"><i>Pittsburgh</i><p>
 							</div>
 							<div class="col-sm-3 added-city">
-								<span class="glyphicon glyphicon-plus center"></span>
+								<span class="glyphicon glyphicon-plus center" data-loc="Pittsburgh"></span>
 							</div> 
 						</div>
 					</div>
@@ -63,7 +69,7 @@
 				</li>
 				<br>
 				<li>
-				  <button type="button" class="btn btn-default btn-lg" style="width:100%">Filter</button>
+				  <button type="button" class="btn btn-default btn-lg filter" style="width:100%">Filter</button>
 				</li>
 
 			</ul>

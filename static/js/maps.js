@@ -49,8 +49,8 @@ function initialize(position) {
    // $('#map-canvas').css('height', $(window).height() +'px');
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-    getAddressOfBusiness('pittsburgh', 'intermedix');
-    getAddressOfBusiness('philadelphia', 'Wells Fargo');
+   // getAddressOfBusiness('Pi', 'intermedix');
+    //getAddressOfBusiness('philadelphia', 'Wells Fargo');
 
 
     // add your current location to map

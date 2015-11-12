@@ -4,12 +4,19 @@ var geocoder = new google.maps.Geocoder();
 
 
 var latlng = {
-    'philadelphia': {'lat': 39.9496103, 'lng':-75.1502821},
-    'pittsburgh': {'lat': 40.4624764, 'lng': -79.9300166},
-    'dc': {'lat': 38.8976763, 'lng': -77.0365298},
-    'francisco': {'lat': 37.7675707, 'lng': -122.430643}
+    'Philadelphia': {'lat': 39.9496103, 'lng':-75.1502821},
+    'Pittsburgh': {'lat': 40.4624764, 'lng': -79.9300166},
+    'Washington DC': {'lat': 38.8976763, 'lng': -77.0365298},
+    'San Francisco': {'lat': 37.7675707, 'lng': -122.430643}
 };
 
+// city to state mapping
+var states = {
+    'Philadelphia': 'PA',
+    'Pittsburgh': 'PA',
+    'Washington DC': 'District of Columbia',
+    'San Francisco': 'CA'
+};
 
 
 
@@ -23,6 +30,13 @@ function getCoordinates(placeId, address, company, city)
         if (status === google.maps.GeocoderStatus.OK) {
 
             addMarker(results[0].geometry.location, company, city);
+
+        } else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {  
+
+            setTimeout(function() {
+                getCoordinates(placeId, address, company, city);
+            }, 200);
+
         } else {
           alert('Geocode was not successful for the following reason: ' + status);
         }
@@ -33,18 +47,21 @@ function getCoordinates(placeId, address, company, city)
 
 
 /*
-        get address of employer(queryPhrase) and location(city)
+        get address of employer
+
+        city: the city that the used select to search for jobs in 'Philadelphia', 'Pittsburgh'
+        exactLoc: the precise city and state of the employer return by glassdoor. ex 'Monroeville'
 */
-function getAddressOfBusiness(city, company){
+function getAddressOfBusiness(city, exactLoc, company){
 
     var lat = latlng[city].lat;
     var lng = latlng[city].lng;
 
-    var loc = new google.maps.LatLng(lat, lng);
+    var latLngCity = new google.maps.LatLng(lat, lng);
 
 
     var params = {
-        location: loc,
+        location: latLngCity,
         keyword: company,
         radius: '50000'
     };
@@ -55,14 +72,17 @@ function getAddressOfBusiness(city, company){
     service.nearbySearch(params, function(place, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             //now must call getGeoCode which should plot this address to the map
-            getCoordinates(place[0].place_id, place[0].vicinity, company, city);
-            //showAddress(place[0].vicinity);
+            getCoordinates(place[0].place_id, place[0].vicinity, company, exactLoc);
             //printJSON(place);
-            //alert(place[0].vicinity);
-            //return place[0].vicinity;
             
+        }else if (status ===  google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {  
+
+            setTimeout(function() {
+                getCoordinates(placeId, address, company, city);
+            }, 200);
+
         }else{
-            alert(status);
+            alert('Google Places Request: ' + status);
         }
     });
 
@@ -90,10 +110,6 @@ function addMarker(myLatlng, company, city){
     marker.addListener('click', function() {
         infowindow.open(map, marker);
     });
-
-
-
-
 
 
 }

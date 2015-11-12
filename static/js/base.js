@@ -1,5 +1,14 @@
 var GOOGLE_KEY = 'AIzaSyDsnaGf5pCVRpo5hCpcBfOq0J5Vdzj8DLY'; 
 
+// list of cities that the user wants to search for job in
+var locations = [];
+
+
+
+// attach event listeners
+$('.glyphicon-plus').on('click', handleLocation);
+$('.glyphicon-remove').on('click', handleLocation);
+
 
 
 function printJSON(json){
@@ -23,4 +32,18 @@ function buildURL(baseURL, params){
 
 	return url;
 }
+
+
+function handleLocation(){
+	var loc = $(this).attr('data-loc');
+
+	if(loc in locations)
+		locations.splice(loc);
+	else
+		locations.push(loc);
+
+	$(this).toggleClass('glyphicon-plus glyphicon-remove');	
+}
+
+
 

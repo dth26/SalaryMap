@@ -70,10 +70,12 @@ div.col-sm-10, div.col-sm-2, .same-height-col{
 .glyphicon-plus{
     color: green;
     margin-left: -10px;
+    cursor: pointer;
 }
 .glyphicon-remove{
     margin-left: -10px;
     color: red;
+    cursor: pointer;
 }
 /* bootstrap */
 .navbar{

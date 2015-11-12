@@ -6,31 +6,50 @@ var ID = '47182';
 var glassdoorURL = 'http://api.glassdoor.com/api/api.htm?t.p=' + ID + '&t.k=' + KEY + '&userip=0.0.0.0&useragent=&format=json&v=1&countryId=1';
 
 
-(function() {
-	var city = $('#cityIn').val();
-	var searchPhrase = $('#searchPhraseIn').val();
+$('.filter').on('click', getJobs);
 
-	city = 'Pittsburgh';
-	searchPhrase = 'software engineer';
-	getJobsInCity(city, searchPhrase);
-})();
+
+// (function() {
+// 	var city = $('#cityIn').val();
+// 	var searchPhrase = $('#searchPhraseIn').val();
+
+// 	city = 'Pittsburgh';
+// 	searchPhrase = 'software engineer';
+// 	getJobsInCity(city, searchPhrase);
+// })();
 
 
 
 /*, 
 	get jobs in city for occupation
 */
-function getJobsInCity(city, searchPhrase, searchLimit){
+function getJobs(){
 
-	var params = {
-		'action': 'employers',
-		'pn': 1,
-		'city': city,
-		'q': searchPhrase,			// can be any combination of employer or occupation
-		'ps': searchLimit			// number of employers returned
-	} 
+	var jobTitle = $.trim($('#searchPhraseIn').val());
+	var searchLimit = 10;
+	var params, state, city;
 
-	requestToGlassdoor(params);
+
+	// locations in base.js
+	// contains the cities that the user wants to search
+	for(var i=0; i<locations.length ;i++)
+	{
+		city = locations[i];
+		state = states[city];
+
+		params = {
+			'action': 'employers',
+			'pn': 1,
+			'city': city,
+			'state': state,
+			'country': 'USA',
+			'q': jobTitle,				// can be any combination of employer or occupation
+			'ps': searchLimit			// number of employers returned
+		}; 
+
+		requestToGlassdoor(params);
+	}
+
 }
 
 
@@ -47,17 +66,39 @@ function requestToGlassdoor(params){
 	    success: function(data){
 	    	var currentPageNum = data.response.currentPageNumber;
 	    	var totalPages = data.response.totalNumberOfPages;
+	    	var employers = data.response.employers;
 
-	    	//printJSON(data);
+	    	/* 
+	    		we can get a more precise location of employer user 'data.response.employers.featuredReview.location'
+	    		however, this would require double the amount of requests for geocoding since I would have to
+	    		get the coordinates of this location to pass to the google.places request. Right now I simply pass the
+	    		city that the user select such as 'Philadelphia', 'Pittsburgh'
+			*/
 
-	    	// add employers to map
+
+			//printJSON(data.response.employers);
+
+			// iterate through list of employers for current page
+			for(var i=0; i<employers.length && i<10; i++)
+			{
+				var companyLoc = employers[i].featuredReview.location;
+	    		var companyName = data.response.employers[i].name;
+	    		/*
+				Glassdoor only returns the name of the employee and the city, state
+				getAddressOfBusiness() gets the exact address
+	    		*/
+	    		//alert(companyName + ' ' + companyLoc);
+	    		getAddressOfBusiness(params.city, companyLoc, companyName);
+			}
+
 
 	    	// you must iterate through each page in the request
-	    	if(currentPageNum<totalPages){
+	    	if(currentPageNum<totalPages && currentPageNum<2)
+	    	{
 	    		params['pn'] = currentPageNum+1;
 
 	    		// recursive call to get every page
-	    		//requestToGlassdoor(params);
+	    		requestToGlassdoor(params);
 	    	}
 	
 	    },
@@ -70,8 +111,12 @@ function requestToGlassdoor(params){
 }
 
 
+/*
+	Iterate through list of employees for current page
+*/
+function iterateEmployers(){
 
-
+}
 
 
 
