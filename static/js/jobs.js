@@ -123,7 +123,7 @@ function scrapeGlassdoor(curr, totalLoc, jobTitle){
 	state = states[city];
 
 	$.ajax({
-		url: '/scrapeGlassdoor?city=' + city + '&searchPhraseIn' + jobTitle,
+		url: '/scrapeGlassdoor?city=' + city + '&searchPhraseIn=' + jobTitle,
 		method: 'GET',
 		dataType: 'json',
 		success: function(data){

@@ -39,7 +39,7 @@ import requests
 class testRequests(webapp2.RequestHandler):
 
 	def get(self):
-		url = 'http://www.glassdoor.com/Salaries/pittsburgh-software-engineer-salary-SRCH_IL.0,10_IM684_KO11,28_IP1.htm'
+		#url = 'http://www.glassdoor.com/Salaries/pittsburgh-software-engineer-salary-SRCH_IL.0,10_IM684_KO11,28_IP1.htm'
 		hdr = {
 			'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
 			'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -48,20 +48,36 @@ class testRequests(webapp2.RequestHandler):
 			'Accept-Language': 'en-US,en;q=0.8',
 			'Connection': 'keep-alive'
 		}
+
+		urlLocatorStr = {
+			'Philadelphia': '_IM676_KO13,',
+			'Pittsburgh': '_IM684_KO11,',
+			'San Francisco': '_IM759_KO14',
+			'Washington DC': '_IM911_KO14,'
+		}
+
+		city = self.request.get('city')
+		jobTitle = self.request.get('searchPhraseIn')
+		jobTitle = jobTitle.replace(' ', '-')
+
+		lowerBound = str(0)
+		middleBound = str(len(city))
+		upperBound = str(1 + len(city) + len(jobTitle))
+
+		### EX URL
+		### url = 'http://www.glassdoor.com/Salaries/pittsburgh-software-engineer-salary-SRCH_IL.0,10_IM684_KO11,28_IP1.htm'
+		### city = pitturgh, jobTitle = Software Engineer, lowerBound = 0, middleBound = 10, urlLocatiorStr[city] = _IM684_KO11,, upperBound = 28
+		url = 'http://www.glassdoor.com/Salaries/' + city + '-' + jobTitle + '-salary-SRCH_IL.' +lowerBound +',' +middleBound + urlLocatorStr[city] + upperBound + '_IP1.htm'
 		page = requests.get(url, headers= hdr)
-
-
 		soup = BeautifulSoup(page.content, 'html.parser')
 
 		#print soup
 		#print soup.div
 
-		salaryRows = soup.find_all("div", class_="pageContentWrapper")
-		salaryRows = soup.find_all("div", class_="cell alignLt minor padBotLg")
-		salaryRows = soup.find(id="SalarySearchResults")
-		salaryRows = soup.find(id="MainCol")
+
 		#salaryRows = salaryRows.findChild("div", class_="srchNavContainer tbl fill")
-		salaryRows = soup.find_all("span", class_="i-emp minor")
+		salaryRows = soup.find_all("div", class_="tbl fill salaryRow ")
+		#salaryRows = soup.find_all("div", class_="meanPay alignRt h2 i-cur")
 
 		print salaryRows
 
