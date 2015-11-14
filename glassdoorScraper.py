@@ -76,10 +76,16 @@ class testRequests(webapp2.RequestHandler):
 
 
 		#salaryRows = salaryRows.findChild("div", class_="srchNavContainer tbl fill")
-		salaryRows = soup.find_all("div", class_="tbl fill salaryRow ")
-		#salaryRows = soup.find_all("div", class_="meanPay alignRt h2 i-cur")
+		companyRows = soup.find_all("div", class_="tbl fill salaryRow ")
 
-		print salaryRows
+		for company in companyRows:
+			companyName = company.find("span", class_="i-emp minor").get_text()
+
+			salary = company.find("div", class_="meanPay alignRt h2 i-cur").get_text()
+
+			print companyName + salary
+		
+
 
 
 # class testDryScape(webapp2.RequestHandler):
