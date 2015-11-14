@@ -8,5 +8,5 @@ import urllib2
 
 app = webapp2.WSGIApplication([
     ('/', indexController.indexHandler),
-    ('/scrapeGlassdoor', glassdoorScraper.testRequests)
+    ('/scrapeGlassdoor', glassdoorScraper.getSalaries)
 ], debug=True)
