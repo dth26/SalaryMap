@@ -26,7 +26,7 @@ var states = {
 function getCoordinates(companyData)
 {
 
-    geocoder.geocode({'address': address}, function(results, status) {
+    geocoder.geocode({'placeId': companyData.placeId}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
 
             companyData.coordinates = results[0].geometry.location;
@@ -74,7 +74,7 @@ function getAddressOfBusiness(companyData){
 
     var params = {
         location: latLngCity,
-        keyword: companyName,
+        keyword: companyData.companyName,
         radius: '50000'
     };
 
@@ -84,7 +84,7 @@ function getAddressOfBusiness(companyData){
     service.nearbySearch(params, function(place, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             
-            companyData.place_id = place[0].place_id;
+            companyData.placeId = place[0].place_id;
             companyData.vicinity = place[0].vicinity;
             
             // call getCoordinates which should plot this address to the map
@@ -98,7 +98,11 @@ function getAddressOfBusiness(companyData){
             }, 200);
 
         }else{
-            alert('Google Places Request: ' + status);
+
+            // our algorithm could not find the addresses for the following employers: thus cannnot place on map
+            // companyData.companyName;
+
+            console.log('Google Places Request: ' + status + ' FOR: ' + companyData.companyName + ' ' + city);
         }
     });
 
@@ -111,7 +115,6 @@ function getAddressOfBusiness(companyData){
 */
 function addMarker(companyData){
 
-    alert(companyData.salary);
     var marker = new google.maps.Marker({
         position: companyData.coordinates,
         map: map,

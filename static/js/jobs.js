@@ -128,28 +128,32 @@ function scrapeGlassdoor(curr, totalLoc, jobTitle){
 		dataType: 'json',
 		success: function(data){
 
-			printJSON(data);
+			/*
+				glassdoor does not provide the address or coordinates of the employer,
+				so first we must get the address of the employer using googlePlaces 
+				and then we must get the coordinates of this address using geocoding
+			*/
+			var companies = data.companies;
+			var companyData = {};
+
+			for(var i=0; i<companies.length; i++)
+			{
+				companyData = {
+					'city': city,
+					'jobTitle':  companies[i].companyJobTitle,
+					'companyName': companies[i].companyName,
+					'salary': companies[i].companySalary
+				};
+
+
+				//printJSON(companies[i]);
+				getAddressOfBusiness(companyData);
+			}
 
 			// scrape all locations that user selects
 			if(curr <= totalLoc-1)
 			{
 				scrapeGlassdoor(curr, totalLoc, jobTitle);
-
-				city, companyJobTitle, companyName, companySalary
-
-				var companyData = {
-					'city': city,
-					'jobTitle':  data.companyJobTitle,
-					'companyName': data,companyName,
-					'salary': data.companySalary
-				};
-
-				/*
-					glassdoor does not provide the address or coordinates of the employer,
-					so first we must get the address of the employer using googlePlaces 
-					and then we must get the coordinates of this address using geocoding
-				*/
-				getAddressOfBusiness(companyData);
 			}
 		}
 	});
