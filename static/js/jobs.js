@@ -119,8 +119,8 @@ function getJobs(){
 // scrape glassdoor
 function scrapeGlassdoor(curr, totalLoc, jobTitle){
 
-	city = locations[curr++];
-	state = states[city];
+	var city = locations[curr++];
+	var state = states[city];
 
 	$.ajax({
 		url: '/scrapeGlassdoor?city=' + city + '&searchPhraseIn=' + jobTitle,
@@ -134,20 +134,19 @@ function scrapeGlassdoor(curr, totalLoc, jobTitle){
 				and then we must get the coordinates of this address using geocoding
 			*/
 			var companies = data.companies;
-			var companyData = {};
 
 			for(var i=0; i<companies.length; i++)
 			{
-				companyData = {
+				var companyData = {
+					'salary': companies[i].salary,
 					'city': city,
-					'jobTitle':  companies[i].companyJobTitle,
-					'companyName': companies[i].companyName,
-					'salary': companies[i].companySalary
+					'jobTitle':  companies[i].jobTitle,
+					'companyName': companies[i].companyName
 				};
 
-
-				//printJSON(companies[i]);
-				getAddressOfBusiness(companyData);
+	            getAddressOfBusiness(companyData);
+	      
+				//getAddressOfBusiness(companyData);
 			}
 
 			// scrape all locations that user selects

@@ -26,19 +26,21 @@ var states = {
 function getCoordinates(companyData)
 {
 
-    geocoder.geocode({'placeId': companyData.placeId}, function(results, status) {
+    geocoder.geocode({'address': companyData.vicinity}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
 
-            companyData.coordinates = results[0].geometry.location;
+            companyData['coordinates'] = results[0].geometry.location;
             addMarker(companyData);
 
-        } else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {  
+        } 
+        // else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {  
 
-            setTimeout(function() {
-                getCoordinates(companyData);
-            }, 200);
+        //     setTimeout(function() {
+        //         getCoordinates(companyData);
+        //     }, 200);
 
-        } else {
+        // } 
+        else {
           alert('Geocode was not successful for the following reason: ' + status);
         }
     });
@@ -66,8 +68,8 @@ function getCoordinates(companyData)
 */
 function getAddressOfBusiness(companyData){
 
-    var lat = latlng[city].lat;
-    var lng = latlng[city].lng;
+    var lat = latlng[companyData.city].lat;
+    var lng = latlng[companyData.city].lng;
 
     var latLngCity = new google.maps.LatLng(lat, lng);
 
@@ -84,25 +86,27 @@ function getAddressOfBusiness(companyData){
     service.nearbySearch(params, function(place, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             
-            companyData.placeId = place[0].place_id;
-            companyData.vicinity = place[0].vicinity;
+            companyData['placeId'] = place[0].place_id;
+            companyData['vicinity'] = place[0].vicinity;
             
             // call getCoordinates which should plot this address to the map
             getCoordinates(companyData);
             // printJSON(place);
             
-        }else if (status ===  google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {  
-            /* Wait 200 ms and run request again if PlacesService returns over query limit */
-            setTimeout(function() {
-                getAddressOfBusiness(companyData);
-            }, 200);
+        }
+        // else if (status ===  google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {  
+        //     // Wait 200 ms and run request again if PlacesService returns over query limit 
+        //     // setTimeout(function() {
+        //     //     getAddressOfBusiness(companyData);
+        //     // }, 200);
 
-        }else{
+        // }
+        else{
 
             // our algorithm could not find the addresses for the following employers: thus cannnot place on map
             // companyData.companyName;
 
-            console.log('Google Places Request: ' + status + ' FOR: ' + companyData.companyName + ' ' + city);
+            console.log('Google Places Request: ' + status + ' FOR: ' + companyData.companyName + ' ' + companyData.city);
         }
     });
 
@@ -121,11 +125,17 @@ function addMarker(companyData){
         title: companyData.companyName
     });
 
-    // marker.setMap(map);
+   // printJSON(companyData);
 
-    // marker.addListener('click', function() {
-    //     infowindow.open(map, marker);
-    // });
+
+    var infowindow = new google.maps.InfoWindow({
+        content: companyData.companyName + '<br>' + companyData.jobTitle + '<br><b>' + companyData.salary + '</b>' 
+    });
+
+
+    marker.addListener('click', function() {
+        infowindow.open(map, marker);
+    });
 
 
 }
