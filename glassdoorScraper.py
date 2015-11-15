@@ -1,5 +1,6 @@
 import webapp2
 import app_global
+import json
 
 import sys
 sys.path.insert(0, 'lib')
@@ -38,13 +39,20 @@ class getSalaries(webapp2.RequestHandler):
 		middleBound = str(len(city))
 		upperBound = str(1 + len(city) + len(jobTitle))
 
+		print city
+		print jobTitle
+		print lowerBound
+		print middleBound
+		print upperBound
+
 		### EX URL
 		### url = 'http://www.glassdoor.com/Salaries/pittsburgh-software-engineer-salary-SRCH_IL.0,10_IM684_KO11,28_IP1.htm'
 		### city = pitturgh, jobTitle = Software Engineer, lowerBound = 0, middleBound = 10, urlLocatiorStr[city] = _IM684_KO11,, upperBound = 28
-		url = 'http://www.glassdoor.com/Salaries/' + city + '-' + jobTitle + '-salary-SRCH_IL.' +lowerBound +',' +middleBound + urlLocatorStr[city] + upperBound + '_IP1.htm'
+		url = 'http://www.glassdoor.com/Salaries/' + city + '-' + jobTitle + '-salary-SRCH_IL.' +lowerBound +',' +middleBound + urlLocatorStr[city] + upperBound + '_SDAS.htm'
 		page = requests.get(url, headers= hdr)
 		soup = BeautifulSoup(page.content, 'html.parser')
 
+		print url
 		#print soup
 		#print soup.div
 
@@ -52,11 +60,22 @@ class getSalaries(webapp2.RequestHandler):
 		#salaryRows = salaryRows.findChild("div", class_="srchNavContainer tbl fill")
 		companyRows = soup.find_all("div", class_="tbl fill salaryRow ")
 
+		companyJSON = list()
 		for company in companyRows:
-			companyName = company.find("span", class_="i-emp minor").get_text()
-			salary = company.find("div", class_="meanPay alignRt h2 i-cur").get_text()
 
-			print companyName + salary
+			companyName = company.find("span", class_="i-emp minor").get_text().strip()
+			salary = company.find("div", class_="meanPay alignRt h2 i-cur").get_text().strip()
+			companyJobTitle = company.find("span", class_="i-occ strong noMargVert ").get_text().strip()
+
+			if salary != 'n/a':
+				company = dict()
+				company['companyName'] = companyName
+				company['jobTitle'] = companyJobTitle
+				company['salary'] = salary
+
+				companyJSON.append(company)
+				#print companyJobTitle
+				print companyName + ' ' + companyJobTitle + ' '+ salary
 
 
 		# get city Area Avg, and National Avg for salaries
@@ -64,6 +83,15 @@ class getSalaries(webapp2.RequestHandler):
 		nationaAvgSalary = avgSalaries[0].get_text()
 		cityAvgSalary = avgSalaries[1].get_text()
 		
+		salaryJSON = dict()
+		salaryJSON['nationaAvgSalary'] = nationaAvgSalary
+		salaryJSON['cityAvgSalary'] = cityAvgSalary
+
+		results = dict()
+		results['companies'] = companyJSON
+		results['salaryData'] = salaryJSON
+		
+		self.response.out.write(json.dumps(results))
 
 
 

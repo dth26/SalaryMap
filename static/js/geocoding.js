@@ -23,18 +23,19 @@ var states = {
 /* 
     compute geolocation(latitude, longitude) given an address
 */
-function getCoordinates(placeId, address, company, city)
+function getCoordinates(companyData)
 {
 
     geocoder.geocode({'address': address}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
 
-            addMarker(results[0].geometry.location, company, city);
+            companyData.coordinates = results[0].geometry.location;
+            addMarker(companyData);
 
         } else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {  
 
             setTimeout(function() {
-                getCoordinates(placeId, address, company, city);
+                getCoordinates(companyData);
             }, 200);
 
         } else {
@@ -45,6 +46,17 @@ function getCoordinates(placeId, address, company, city)
 
 }
 
+    /*
+                var companyData = {
+                    'city': city,
+                    'jobTitle':  data.companyJobTitle,
+                    'companyName': data,companyName,
+                    'salary': data.companySalary
+                };
+
+    */
+
+
 
 /*
         get address of employer
@@ -52,7 +64,7 @@ function getCoordinates(placeId, address, company, city)
         city: the city that the used select to search for jobs in 'Philadelphia', 'Pittsburgh'
         exactLoc: the precise city and state of the employer return by glassdoor. ex 'Monroeville'
 */
-function getAddressOfBusiness(city, exactLoc, company){
+function getAddressOfBusiness(companyData){
 
     var lat = latlng[city].lat;
     var lng = latlng[city].lng;
@@ -62,7 +74,7 @@ function getAddressOfBusiness(city, exactLoc, company){
 
     var params = {
         location: latLngCity,
-        keyword: company,
+        keyword: companyName,
         radius: '50000'
     };
 
@@ -71,14 +83,18 @@ function getAddressOfBusiness(city, exactLoc, company){
 
     service.nearbySearch(params, function(place, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-            //now must call getGeoCode which should plot this address to the map
-            getCoordinates(place[0].place_id, place[0].vicinity, company, exactLoc);
-            //printJSON(place);
+            
+            companyData.place_id = place[0].place_id;
+            companyData.vicinity = place[0].vicinity;
+            
+            // call getCoordinates which should plot this address to the map
+            getCoordinates(companyData);
+            // printJSON(place);
             
         }else if (status ===  google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {  
-
+            /* Wait 200 ms and run request again if PlacesService returns over query limit */
             setTimeout(function() {
-                getCoordinates(placeId, address, company, city);
+                getAddressOfBusiness(companyData);
             }, 200);
 
         }else{
@@ -93,23 +109,20 @@ function getAddressOfBusiness(city, exactLoc, company){
 /* 
     set marker on google maps of current location 
 */
-function addMarker(myLatlng, company, city){
+function addMarker(companyData){
 
+    alert(companyData.salary);
     var marker = new google.maps.Marker({
-        position: myLatlng,
+        position: companyData.coordinates,
         map: map,
-        title: company
+        title: companyData.companyName
     });
 
-    marker.setMap(map);
+    // marker.setMap(map);
 
-    // alert(myLatlng);
-    // alert(marker.getPosition().lat());
-    // alert(marker.getPosition().lng());
-
-    marker.addListener('click', function() {
-        infowindow.open(map, marker);
-    });
+    // marker.addListener('click', function() {
+    //     infowindow.open(map, marker);
+    // });
 
 
 }
