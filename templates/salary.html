@@ -1,0 +1,7 @@
+<select class="form-control" ng-model="salaryForLocation">
+  <option ng-repeat="l in locations">1</option>
+</select>
+
+<ul id="salaryList">
+	<li ng-repeat="s in salaries | filter:salaryForLocation"></li>
+</ul>

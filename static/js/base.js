@@ -4,10 +4,38 @@ var GOOGLE_KEY = 'AIzaSyDsnaGf5pCVRpo5hCpcBfOq0J5Vdzj8DLY';
 var locations = [];
 
 
+var AngularApp = angular.module('salaryMap',[])
+
+AngularApp.config(['$interpolateProvider', function($interpolateProvider) {
+    $interpolateProvider.startSymbol('[[');
+    $interpolateProvider.endSymbol(']]');
+}]);
+
+AngularApp.factory('globals', function(){
+	return{
+		locations: {}
+	};
+});
+
+AngularApp.controller('locations', function($scope, globals){
+	
+	$scope.handleLocation = function($event){
+		var element = $event.currentTarget
+		var loc = $(element).attr('data-loc');
+
+		if(loc in locations)
+			locations.splice(loc);
+		else
+			locations.push(loc);
+
+		$(element).toggleClass('glyphicon-plus glyphicon-remove');
+	}
+});
+
 
 // attach event listeners
-$('.glyphicon-plus').on('click', handleLocation);
-$('.glyphicon-remove').on('click', handleLocation);
+// $('.glyphicon-plus').on('click', handleLocation);
+// $('.glyphicon-remove').on('click', handleLocation);
 $('#right-panel-menu li').on('click', changeMenuTab);
 
 
@@ -34,16 +62,6 @@ function buildURL(baseURL, params){
 }
 
 
-function handleLocation(){
-	var loc = $(this).attr('data-loc');
-
-	if(loc in locations)
-		locations.splice(loc);
-	else
-		locations.push(loc);
-
-	$(this).toggleClass('glyphicon-plus glyphicon-remove');	
-}
 
 
 function changeMenuTab(){

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="salaryMap">
     <head>
         <meta charset="utf-8">
 
         <!--CSS-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/style/base.css">
+        <link rel="stylesheet" type="text/css" href="/style/salary.css">
         <!--
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsnaGf5pCVRpo5hCpcBfOq0J5Vdzj8DLY&signed_in=true&libraries=places&sensor=false" async defer></script>
         -->
@@ -30,7 +31,7 @@
                       <li role="presentation" data-tab="salary"><a href="#">Salary</a></li>
                       <li role="presentation"><a href="#">Other</a></li>
                     </ul>
-                    <div id="filterContent">
+                    <div id="filterContent" ng-controller="locations">
                         {% include "filter.html" %}
                     </div>
                     <div id="salaryContent">
@@ -51,7 +52,7 @@
 
 
 
-  <!--  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>   
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsnaGf5pCVRpo5hCpcBfOq0J5Vdzj8DLY&libraries=places"></script> 
     <script type="text/javascript" src="/js/base.js"></script>
     <script type="text/javascript" src="/js/geocoding.js"></script>
