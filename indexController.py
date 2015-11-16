@@ -5,4 +5,4 @@ import glassdoorScraper
 class indexHandler(webapp2.RequestHandler):
     def get(self):
     	glassdoorScraper.getSalaries()
-        app_global.render_template(self, 'index.html', {})
+        app_global.render_template(self, 'base.html', {})

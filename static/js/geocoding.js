@@ -33,13 +33,13 @@ function getCoordinates(companyData)
             addMarker(companyData);
 
         } 
-        // else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {  
+        else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {  
 
         //     setTimeout(function() {
         //         getCoordinates(companyData);
         //     }, 200);
-
-        // } 
+            alert("Reached GoogleGeocoder Query Limit for today: increase requests limit");
+        } 
         else {
           alert('Geocode was not successful for the following reason: ' + status);
         }
@@ -94,13 +94,14 @@ function getAddressOfBusiness(companyData){
             // printJSON(place);
             
         }
-        // else if (status ===  google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {  
-        //     // Wait 200 ms and run request again if PlacesService returns over query limit 
-        //     // setTimeout(function() {
-        //     //     getAddressOfBusiness(companyData);
-        //     // }, 200);
+        else if (status ===  google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {  
+            // Wait 200 ms and run request again if PlacesService returns over query limit 
+            // setTimeout(function() {
+            //     getAddressOfBusiness(companyData);
+            // }, 200);
 
-        // }
+            alert("Reached GooglePlacesService Query Limit for today: increase requests limit");
+        }
         else{
 
             // our algorithm could not find the addresses for the following employers: thus cannnot place on map

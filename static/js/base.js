@@ -8,7 +8,7 @@ var locations = [];
 // attach event listeners
 $('.glyphicon-plus').on('click', handleLocation);
 $('.glyphicon-remove').on('click', handleLocation);
-
+$('#right-panel-menu li').on('click', changeMenuTab);
 
 
 function printJSON(json){
@@ -46,4 +46,15 @@ function handleLocation(){
 }
 
 
+function changeMenuTab(){
+	var currMenuTab = '#' + $('#right-panel-menu .active').attr('data-tab') + 'Content';
+	var nextMenuTab = '#' + $(this).attr('data-tab') + 'Content';
+
+	$('#right-panel-menu .active').removeClass('active');
+	$(currMenuTab).hide();
+
+	$(this).addClass('active');
+	$(nextMenuTab).show();
+
+}
 

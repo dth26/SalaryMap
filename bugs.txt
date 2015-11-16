@@ -1,0 +1,9 @@
+
+
+glassdoorScraper.getSalaries failing on companyname
+###
+### this will fail on strings that contain non-ascii characters
+### for example filter 'Philadelphia' and 'database administrator'
+### will fail on Condé Nast
+### replace non-ascii character : re.sub(r'[^\x00-\x7F]+','', companyName) 
+###

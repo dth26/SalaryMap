@@ -67,6 +67,8 @@ class getSalaries(webapp2.RequestHandler):
 			salary = company.find("div", class_="meanPay alignRt h2 i-cur").get_text().strip()
 			companyJobTitle = company.find("span", class_="i-occ strong noMargVert ").get_text().strip()
 
+
+
 			if salary != 'n/a':
 				company = dict()
 				company['companyName'] = companyName
@@ -74,8 +76,12 @@ class getSalaries(webapp2.RequestHandler):
 				company['salary'] = salary
 
 				companyJSON.append(company)
-				#print companyJobTitle
-				print companyName + ' ' + companyJobTitle + ' '+ salary
+
+				# print companyJobTitle
+				# print companyName
+				# print salary
+
+				# print companyName + ' ' + companyJobTitle + ' '+ salary
 
 
 		# get city Area Avg, and National Avg for salaries
