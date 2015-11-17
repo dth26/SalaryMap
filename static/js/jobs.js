@@ -109,18 +109,24 @@ function requestToGlassdoor(params){
 
 function getJobs(){
 	var jobTitle = $.trim($('#searchPhraseIn').val());
+
+	var locationsElement = document.getElementById('filterContent');
+	var locationsCtrl = angular.element(locationsElement).scope();
+	var locations = locationsCtrl.getLocations();
 	var totalLoc = locations.length;					// total number of cities user wants searched
 
-	scrapeGlassdoor(0, totalLoc, jobTitle);
+	scrapeGlassdoor(0, totalLoc, jobTitle, locations);
 }
 
 
 
 // scrape glassdoor
-function scrapeGlassdoor(curr, totalLoc, jobTitle){
+function scrapeGlassdoor(curr, totalLoc, jobTitle, locations){
 
 	var city = locations[curr++];
 	var state = states[city];
+
+	alert(city);
 
 	$.ajax({
 		url: '/scrapeGlassdoor?city=' + city + '&searchPhraseIn=' + jobTitle,
@@ -145,8 +151,6 @@ function scrapeGlassdoor(curr, totalLoc, jobTitle){
 				};
 
 	            getAddressOfBusiness(companyData);
-	      
-				//getAddressOfBusiness(companyData);
 			}
 
 			// scrape all locations that user selects

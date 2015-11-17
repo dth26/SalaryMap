@@ -11,20 +11,37 @@ AngularApp.config(['$interpolateProvider', function($interpolateProvider) {
     $interpolateProvider.endSymbol(']]');
 }]);
 
-AngularApp.factory('globals', function(){
-	return{
-		locations: {}
+AngularApp.factory('locations', function(){
+	var locations = [];
+
+	return {
+		splice: function(location){
+			locations.splice(location);
+		},
+		push : function(location){
+			locations.push(location);
+		},
+		data: locations
 	};
 });
 
-AngularApp.controller('locations', function($scope, globals){
+AngularApp.controller('locations', function($scope){
+
+	$scope.locations = [];
+
+	$scope.getLocations = function(){
+		return $scope.locations;
+	}
 	
 	$scope.handleLocation = function($event){
 		var element = $event.currentTarget
 		var loc = $(element).attr('data-loc');
+		var locations = $scope.locations;
 
-		if(loc in locations)
-			locations.splice(loc);
+
+		var indexOfLoc = locations.indexOf(loc);
+		if(indexOfLoc > -1)
+			locations.splice(indexOfLoc, 1);
 		else
 			locations.push(loc);
 
