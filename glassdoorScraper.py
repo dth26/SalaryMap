@@ -29,11 +29,11 @@ class getSalaries(webapp2.RequestHandler):
 			'Boston': '_IM109_KO7',
 			'Herndon': '_IM911_KO14',
 			'Houston': '_IM394_KO8',
-			'Philadelphia': '_IM676_KO13,',
-			'Pittsburgh': '_IM684_KO11,',
+			'Philadelphia': '_IM676_KO13',
+			'Pittsburgh': '_IM684_KO11',
 			'New York': '_IM615_KO14',
 			'San Francisco': '_IM759_KO14',
-			'Washington DC': '_IM911_KO14,'
+			'Washington, DC': '_IM911_KO14'
 		}
 
 		city = self.request.get('city')
@@ -93,8 +93,10 @@ class getSalaries(webapp2.RequestHandler):
 
 		# get city Area Avg, and National Avg for salaries
 		avgSalaries = soup.find_all('div', class_='meanPay nowrap positive')
-		#nationaAvgSalary = avgSalaries[0].get_text()
-		#cityAvgSalary = avgSalaries[1].get_text()
+
+
+		nationalAvgSalary = avgSalaries[0].get_text()
+		cityAvgSalary = avgSalaries[1].get_text()
 
 
 		salaryJSON = dict()

@@ -52,9 +52,16 @@ AngularApp.config(['$interpolateProvider', function($interpolateProvider) {
 // 	{'city':'San Francisco', 'state':'CA','lat': 37.7675707, 'lng': -122.430643, 'selected':false}
 // ];
 
-var locs = [{
-	'Baltimore': {'state':'MD','lat': 39.2846225, 'lng':-76.7605701, 'selected':false},
-	'New York': {'state':'NY','lat': 40.7029741, 'lng':-74.2598655, 'selected':false}
+var allLocations = [{
+	'Baltimore': {'state':'MD', 'city':'Baltimore','lat':39.2846225, 'lng':-76.7605701, 'selected':false},
+	'New York': {'state':'NY', 'city':'New York','lat': 40.7029741, 'lng':-74.2598655, 'selected':false},
+	'Houston': {'state':'TX','city':'Houston','lat': 29.8168824, 'lng':-95.6814854, 'selected':false},
+	'Herndon': {'state':'VA','city':'Herndon','lat': 38.9709672, 'lng':-77.4069342, 'selected':false },
+	'Boston': {'state':'MA','city':'Boston','lat': 42.3132882, 'lng':-71.1972408, 'selected':false},
+	'Philadelphia': {'state':'PA', 'city':'Philadelphia','lat': 39.9496103, 'lng':-75.1502821, 'selected':false},
+	'Pittsburgh': {'state':'PA','city':'Pittsburgh','lat': 40.4624764, 'lng': -79.9300166, 'selected':false},
+	'Washington, DC': {'state':'','city':'Washington DC', 'lat': 38.8976763, 'lng': -77.0365298, 'selected':false},
+	'San Francisco': {'state':'CA','city':'San Francisco','lat': 37.7675707, 'lng': -122.430643, 'selected':false}
 }];
 
 // AngularApp.factory('locations', function(){
@@ -92,17 +99,24 @@ AngularApp.controller('locations', function($scope){
 		$scope.locations = [];
 
 
-		for(var i=0;i<locs.length; i++){
+		for(var i=0;i<allLocations.length; i++){
 		//	printJSON(locs[i]));
 
 			$scope.$apply(function(){
-	           $scope.locations.push(locs[i]);
+	           $scope.locations.push(allLocations[i]);
 	        });
 		}
         
 
         //printJSON($scope.locations);
 
+	}
+
+	$scope.loadUserSelectedLocations = function(){
+		$scope.userLocations = [];
+		$scope.$apply(function(){
+			$scope.userLocations.push(locations);
+		});
 	}
 	
 	$scope.handleLocation = function($event){

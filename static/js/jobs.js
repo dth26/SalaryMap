@@ -123,9 +123,9 @@ function getJobs(){
 function scrapeGlassdoor(curr, totalLoc, jobTitle){
 
 	var city = locations[curr++];
-	var state = states[city];
+	var state = allLocations[0][city].state;
 
-	alert("scrapedGlassdoor() " + city);
+	//alert("scrapedGlassdoor() " + city);
 
 
 	$.ajax({

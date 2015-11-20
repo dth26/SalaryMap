@@ -3,28 +3,6 @@
 var geocoder = new google.maps.Geocoder();
 
 
-//  {'city':'Baltimore', 'state':'MD','lat': 39.2846225, 'lng':-76.7605701, 'selected':false},
-//  {'city':'New York', 'state':'NY','lat': 40.7029741, 'lng':-74.2598655, 'selected':false},
-
-var latlng = {
-    'Baltimore': {'lat': 39.2846225, 'lng':-76.7605701},
-    'New York': {'lat': 40.7029741, 'lng':-74.2598655},
-    'Philadelphia': {'lat': 39.9496103, 'lng':-75.1502821},
-    'Pittsburgh': {'lat': 40.4624764, 'lng': -79.9300166},
-    'Washington DC': {'lat': 38.8976763, 'lng': -77.0365298},
-    'San Francisco': {'lat': 37.7675707, 'lng': -122.430643}
-};
-
-// city to state mapping
-var states = {
-    'Philadelphia': 'PA',
-    'Pittsburgh': 'PA',
-    'Washington DC': 'District of Columbia',
-    'San Francisco': 'CA'
-};
-
-
-
 /* 
     compute geolocation(latitude, longitude) given an address
 */
@@ -73,8 +51,8 @@ function getCoordinates(companyData)
 */
 function getAddressOfBusiness(companyData){
 
-    var lat = latlng[companyData.city].lat;
-    var lng = latlng[companyData.city].lng;
+   var lat = allLocations[0][companyData.city].lat;
+   var lng = allLocations[0][companyData.city].lng;
 
     var latLngCity = new google.maps.LatLng(lat, lng);
 
