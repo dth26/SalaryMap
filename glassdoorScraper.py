@@ -25,18 +25,19 @@ class getSalaries(webapp2.RequestHandler):
 		}
 
 		urlLocatorStr = {
-			'Baltimore': '_IM63_KO10',
-			'Boston': '_IM109_KO7',
-			'Herndon': '_IM911_KO14',
-			'Houston': '_IM394_KO8',
-			'Philadelphia': '_IM676_KO13',
-			'Pittsburgh': '_IM684_KO11',
-			'New York': '_IM615_KO14',
-			'San Francisco': '_IM759_KO14',
-			'Washington, DC': '_IM911_KO14'
+			'baltimore': '_IM63_KO10',
+			'boston': '_IM109_KO7',
+			'herndon': '_IM911_KO14',
+			'houston': '_IM394_KO8',
+			'philadelphia': '_IM676_KO13',
+			'pittsburgh': '_IM684_KO11',
+			'new-york': '_IM615_KO14',
+			'san-francisco': '_IM759_KO14',
+			'washington-dc': '_IM911_KO14'
 		}
 
 		city = self.request.get('city')
+		city = city.replace(' ','-').lower()
 		jobTitle = self.request.get('searchPhraseIn')
 		jobTitle = jobTitle.replace(' ', '-')
 
@@ -67,11 +68,9 @@ class getSalaries(webapp2.RequestHandler):
 
 		companyJSON = list()
 		for company in companyRows:
-
 			companyName = company.find("span", class_="i-emp minor").get_text().strip()
 			salary = company.find("div", class_="meanPay alignRt h2 i-cur").get_text().strip()
 			companyJobTitle = company.find("span", class_="i-occ strong noMargVert ").get_text().strip()
-
 
 
 			if salary != 'n/a':
@@ -82,11 +81,6 @@ class getSalaries(webapp2.RequestHandler):
 
 				companyJSON.append(company)
 
-				# print companyJobTitle
-				# print companyName
-				# print salary
-
-				# print companyName + ' ' + companyJobTitle + ' '+ salary
 
 		nationalAvgSalary = 'none'
 		cityAvgSalary = 'none'
@@ -94,9 +88,9 @@ class getSalaries(webapp2.RequestHandler):
 		# get city Area Avg, and National Avg for salaries
 		avgSalaries = soup.find_all('div', class_='meanPay nowrap positive')
 
-
-		nationalAvgSalary = avgSalaries[0].get_text()
-		cityAvgSalary = avgSalaries[1].get_text()
+		if(len(avgSalaries)==2):
+			nationalAvgSalary = avgSalaries[0].get_text()
+			cityAvgSalary = avgSalaries[1].get_text()
 
 
 		salaryJSON = dict()

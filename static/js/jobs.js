@@ -9,49 +9,6 @@ var glassdoorURL = 'http://api.glassdoor.com/api/api.htm?t.p=' + ID + '&t.k=' + 
 $('.filter').on('click', getJobs);
 
 
-// (function() {
-// 	var city = $('#cityIn').val();
-// 	var searchPhrase = $('#searchPhraseIn').val();
-
-// 	city = 'Pittsburgh';
-// 	searchPhrase = 'software engineer';
-// 	getJobsInCity(city, searchPhrase);
-// })();
-
-
-
-/*, 
-	get jobs in city for occupation
-*/
-// function getJobs(){
-
-// 	var jobTitle = $.trim($('#searchPhraseIn').val());
-// 	var searchLimit = 10;
-// 	var params, state, city;
-
-
-// 	// locations in base.js
-// 	// contains the cities that the user wants to search
-// 	for(var i=0; i<locations.length ;i++)
-// 	{
-// 		city = locations[i];
-// 		state = states[city];
-
-// 		params = {
-// 			'action': 'employers',
-// 			'pn': 1,
-// 			'city': city,
-// 			'state': state,
-// 			'country': 'USA',
-// 			'q': jobTitle,				// can be any combination of employer or occupation
-// 			'ps': searchLimit			// number of employers returned
-// 		}; 
-
-// 		requestToGlassdoor(params);
-// 	}
-
-// }
-
 
 function requestToGlassdoor(params){
 
@@ -114,6 +71,13 @@ function getJobs(){
 	var locationsCtrl = angular.element(locationsElement).scope();
 	var totalLoc = locations.length;					// total number of cities user wants searched
 
+	// switch to salary panel to view results
+	var currMenuTab = '#' + $('#right-panel-menu .active').attr('data-tab') + 'Content';
+	$('#right-panel-menu .active').removeClass('active');
+	$(currMenuTab).hide();
+	$('li[data-tab="salary"]').addClass('active');
+	$('#salaryContent').show();
+
 	scrapeGlassdoor(0, totalLoc, jobTitle, locations);
 }
 
@@ -127,6 +91,10 @@ function scrapeGlassdoor(curr, totalLoc, jobTitle){
 
 	//alert("scrapedGlassdoor() " + city);
 
+	// add location to drop down on salary page
+	var locationsElement = document.getElementById('filterContent');
+	var locationsCtrl = angular.element(locationsElement).scope();
+	locationsCtrl.loadUserSelectedLocations(city);
 
 	$.ajax({
 		url: '/scrapeGlassdoor?city=' + city + '&searchPhraseIn=' + jobTitle,
@@ -134,7 +102,6 @@ function scrapeGlassdoor(curr, totalLoc, jobTitle){
 		dataType: 'json',
 		success: function(data){
 
-			//printJSON(data);
 			/*
 				glassdoor does not provide the address or coordinates of the employer,
 				so first we must get the address of the employer using googlePlaces 
@@ -155,10 +122,9 @@ function scrapeGlassdoor(curr, totalLoc, jobTitle){
 			}
 
 			// scrape all locations that user selects
-			if(curr <= totalLoc-1)
-			{
+			if(curr <= totalLoc-1){
 				scrapeGlassdoor(curr, totalLoc, jobTitle);
-			}
+			}	
 		}
 	});
 	
