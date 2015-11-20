@@ -112,7 +112,6 @@ function getJobs(){
 
 	var locationsElement = document.getElementById('filterContent');
 	var locationsCtrl = angular.element(locationsElement).scope();
-	var locations = locationsCtrl.getLocations();
 	var totalLoc = locations.length;					// total number of cities user wants searched
 
 	scrapeGlassdoor(0, totalLoc, jobTitle, locations);
@@ -121,12 +120,13 @@ function getJobs(){
 
 
 // scrape glassdoor
-function scrapeGlassdoor(curr, totalLoc, jobTitle, locations){
+function scrapeGlassdoor(curr, totalLoc, jobTitle){
 
 	var city = locations[curr++];
 	var state = states[city];
 
-	alert(city);
+	alert("scrapedGlassdoor() " + city);
+
 
 	$.ajax({
 		url: '/scrapeGlassdoor?city=' + city + '&searchPhraseIn=' + jobTitle,
@@ -134,6 +134,7 @@ function scrapeGlassdoor(curr, totalLoc, jobTitle, locations){
 		dataType: 'json',
 		success: function(data){
 
+			//printJSON(data);
 			/*
 				glassdoor does not provide the address or coordinates of the employer,
 				so first we must get the address of the employer using googlePlaces 

@@ -1,52 +1,122 @@
 
-<form >
-	<ul class="right-panel-form">
-		<li class="li-border">
-		    <label for="searchPhraseIn">Job Title</label>
-		    <input id="searchPhraseIn" type="text" name="searchPhraseIn" placeholder="Type Job Title Here" maxlength="100">
-		    <br><br>
-		    <span>Ex. Software Engineer, Accountant, Human Resources</span>
-		</li>
-		<br><br><br>
-		<li class="li-border">
-		    <label for="cityIn">Locations</label>
 
-<!-- 					<select name="cityIn" class="form-control" style="width: 100%;">
-				<optgroup label="PA">
-					<option>Pittsburgh</option>
-					<option>Philadelphia</option>
-				</optgroup>
-				<optgroup label="CA">
-					<option>San Francisco</option>
-					<option>San Diego</option>
-				</optgroup>
-			</select> 
--->
-			<div class="row">
-				<div class="row inner-panel">
+
+<ul class="right-panel-form">
+	<li class="li-border">
+	    <label for="searchPhraseIn">Job Title</label>
+	    <input id="searchPhraseIn" type="text" name="searchPhraseIn" placeholder="Type Job Title Here" maxlength="100">
+	    <br><br>
+	    <span>Ex. Software Engineer, Accountant, Human Resources</span>
+	</li>
+</ul>
+
+<ul class="right-panel-form">
+	<li class="li-border">
+	    <label for="cityIn">Locations</label>
+		<div class="row">
+			<div class="row inner-panel" >
+				<div ng-repeat="loc in locations| orderBy: 'city'" style="width: 100%; height:auto; display: block; float: left; padding: 5px 0px 5px 0px; "> <!-- Iterate through list of locations -->
+					<div ng-repeat="(key,value) in loc"> <!-- 'New York:{'state':'NY','lat': 40.7029741, 'lng':-74.2598655, 'selected':false}' -->
 						<div class="col-sm-9 added-city">
-						<p class="center"><i>Philadelphia</i></p>
+							<p class="center" style="width: 100%; text-align:center; margin-left: 5px;"><i>[[key]], [[loc[key].state]]</i></p>
+						</div>
+						<div class="col-sm-3 added-city">
+							<span class="glyphicon glyphicon-plus center" ng-if="loc[key].selected==false" ng-click="handleLocation($event)" data-loc="[[key]]"></span>
+							<span class="glyphicon glyphicon-remove center" ng-if="loc[key].selected==true" ng-click="handleLocation($event)" data-loc="[[key]]"></span>
+						</div>
 					</div>
-					<div class="col-sm-3 added-city">
-						<span class="glyphicon glyphicon-plus center" ng-click="handleLocation($event)" data-loc="Philadelphia"></span>
-					</div>
-					<div class="col-sm-9 added-city">
-						<p class="center city-selected"><i>Pittsburgh</i><p>
-					</div>
-					<div class="col-sm-3 added-city">
-						<span class="glyphicon glyphicon-plus center" ng-click="handleLocation($event)" data-loc="Pittsburgh"></span>
-					</div> 
 				</div>
+<!-- 
+
+				<div class="col-sm-3 added-city">
+					<span class="glyphicon glyphicon-plus center" ng-click="handleLocation($event)" data-loc="Philadelphia"></span>
+				</div>
+				<div class="col-sm-9 added-city">
+					<p class="center city-selected"><i>Pittsburgh</i><p>
+				</div>
+				<div class="col-sm-3 added-city">
+					<span class="glyphicon glyphicon-plus center" ng-click="handleLocation($event)" data-loc="Pittsburgh"></span>
+				</div>  -->
 			</div>
-			<br><br>
-			<span>Cities your're searching for work in</span>
-		</li>
-		<br>
-		<li>
-		  <button type="button" class="btn btn-default btn-lg filter" style="width:100%">Filter</button>
-		</li>
+		</div>
+		<br><br>
+		<span>Cities your're searching for work in</span>
+	</li>
+	<li>
+		<button type="button" class="btn btn-default btn-lg filter" style="width:100%">Filter</button>
+	</li>
+</ul>
 
-	</ul>
 
-</form>
+
+
+<!-- 
+	DROP-DOWN FOR LOCATIONS
+-->
+
+<!-- 		
+	<ul class="drop-down">
+	    <li class="value">
+	        <div class="see-values">View Cities</div>
+	        <div class="add-value">
+	            <span class="glyphicon glyphicon-th-list center"></span>
+	        </div>
+	    </li>
+	    <li class="value">
+	    </li>
+	</ul> 
+-->
+
+<!--
+<style>
+
+    ul.drop-down{
+        width: 100%;
+        height: 35px;
+        line-height: 35px;
+        cursor: pointer;
+        list-style-type: none;
+        padding: 0px;
+    }
+    ul.drop-down li{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    ul.drop-down li:nth-child(1){
+        border: 1px solid #DDDDDD;
+    }
+    ul.drop-down li:nth-child(n+2){
+        border: 1px solid #DDDDDD;
+        text-align: center;
+    }
+    ul.drop-down li:nth-child(2){
+        margin-top: 1px;
+    }
+    .drop-down .see-values{
+        height: 35px;
+        width: calc(100% - 35px);
+        display: inline-block;
+        vertical-align: top;
+        font-weight: 600;
+        text-align: center;
+        margin: 0px;
+        padding: 0px;
+    }
+    .drop-down .value{
+
+    }
+    .drop-down .add-value{
+        position: absolute;
+/*           height: 100%;*/
+			height: 33px;
+        width: 35px;
+        display: inline-block;
+        vertical-align: top;
+        background-color: #DDDDDD;
+    }
+</style>
+
+-->
+
 

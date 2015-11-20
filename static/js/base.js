@@ -4,46 +4,120 @@ var GOOGLE_KEY = 'AIzaSyDsnaGf5pCVRpo5hCpcBfOq0J5Vdzj8DLY';
 var locations = [];
 
 
-var AngularApp = angular.module('salaryMap',[])
+
+
+
+
+var AngularApp = angular.module('salaryMap',[]);
+
+
+
+// .config(function(injectables) { // provider-injector
+//   // This is an example of config block.
+//   // You can have as many of these as you want.
+//   // You can only inject Providers (not instances)
+//   // into config blocks.
+// }).run(function(injectables) { // instance-injector
+//   // This is an example of a run block.
+//   // You can have as many of these as you want.
+//   // You can only inject instances (not Providers)
+//   // into run blocks
+// });
+
+
+// .run( ["$scope", function ($scope) {
+// 	// $scope.locations.push(locations);
+// 	// printJSON($scope.locations);
+// }]);
+
+
 
 AngularApp.config(['$interpolateProvider', function($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 }]);
 
-AngularApp.factory('locations', function(){
-	var locations = [];
 
-	return {
-		splice: function(location){
-			locations.splice(location);
-		},
-		push : function(location){
-			locations.push(location);
-		},
-		data: locations
-	};
+
+
+// var locations = [
+// 	{'city':'Baltimore', 'state':'MD','lat': 39.2846225, 'lng':-76.7605701, 'selected':false},
+// 	{'city':'New York', 'state':'NY','lat': 40.7029741, 'lng':-74.2598655, 'selected':false},
+// 	{'city':'Houston', 'state':'TX','lat': 29.8168824, 'lng':-95.6814854, 'selected':false},
+// 	{'city':'Herndon', 'state':'VA','lat': 38.9709672, 'lng':-77.4069342, 'selected':false},
+// 	{'city':'Boston', 'state':'MA','lat': 42.3132882, 'lng':-71.1972408, 'selected':false},
+// 	{'city':'Philadelphia', 'state':'PA','lat': 39.9496103, 'lng':-75.1502821, 'selected':false},
+// 	{'city':'Pittsburgh', 'state':'PA','lat': 40.4624764, 'lng': -79.9300166, 'selected':false},
+// 	{'city':'Washington DC', 'state':'DC', 'lat': 38.8976763, 'lng': -77.0365298, 'selected':false},
+// 	{'city':'San Francisco', 'state':'CA','lat': 37.7675707, 'lng': -122.430643, 'selected':false}
+// ];
+
+var locs = [{
+	'Baltimore': {'state':'MD','lat': 39.2846225, 'lng':-76.7605701, 'selected':false},
+	'New York': {'state':'NY','lat': 40.7029741, 'lng':-74.2598655, 'selected':false}
+}];
+
+// AngularApp.factory('locations', function(){
+// 	var locations = [];
+
+// 	return {
+// 		splice: function(location){
+// 			locations.splice(location);
+// 		},
+// 		push : function(location){
+// 			locations.push(location);
+// 		},
+// 		data: locations
+// 	};
+// });
+
+
+$(document).ready(function(){
+	var locationsElement = document.getElementById('filterContent');
+	var locationsCtrl = angular.element(locationsElement).scope();
+	locationsCtrl.loadAllLocationsToScreen();
 });
+
+
 
 AngularApp.controller('locations', function($scope){
 
-	$scope.locations = [];
 
 	$scope.getLocations = function(){
 		return $scope.locations;
 	}
+
+	$scope.loadAllLocationsToScreen = function(){
+
+		$scope.locations = [];
+
+
+		for(var i=0;i<locs.length; i++){
+		//	printJSON(locs[i]));
+
+			$scope.$apply(function(){
+	           $scope.locations.push(locs[i]);
+	        });
+		}
+        
+
+        //printJSON($scope.locations);
+
+	}
 	
 	$scope.handleLocation = function($event){
-		var element = $event.currentTarget
+		var element = $event.currentTarget;
 		var loc = $(element).attr('data-loc');
-		var locations = $scope.locations;
-
+	
+		//alert(loc);
 
 		var indexOfLoc = locations.indexOf(loc);
 		if(indexOfLoc > -1)
 			locations.splice(indexOfLoc, 1);
 		else
 			locations.push(loc);
+
+		//alert(locations);
 
 		$(element).toggleClass('glyphicon-plus glyphicon-remove');
 	}

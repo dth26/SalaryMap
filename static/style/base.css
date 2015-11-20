@@ -117,9 +117,10 @@ div.col-sm-10, div.col-sm-2, .same-height-col{
     display: block;
     padding: 9px;
     border-radius: 3px;
+/*    border:1px solid #DDDDDD !important;*/
 }
 .li-border{
-    border:1px solid #DDDDDD;
+    border:1px solid #DDDDDD !important;
 }
 .right-panel-form li:last-child{
     border:none;

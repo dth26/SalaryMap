@@ -25,8 +25,13 @@ class getSalaries(webapp2.RequestHandler):
 		}
 
 		urlLocatorStr = {
+			'Baltimore': '_IM63_KO10',
+			'Boston': '_IM109_KO7',
+			'Herndon': '_IM911_KO14',
+			'Houston': '_IM394_KO8',
 			'Philadelphia': '_IM676_KO13,',
 			'Pittsburgh': '_IM684_KO11,',
+			'New York': '_IM615_KO14',
 			'San Francisco': '_IM759_KO14',
 			'Washington DC': '_IM911_KO14,'
 		}
@@ -48,7 +53,7 @@ class getSalaries(webapp2.RequestHandler):
 		### EX URL
 		### url = 'http://www.glassdoor.com/Salaries/pittsburgh-software-engineer-salary-SRCH_IL.0,10_IM684_KO11,28_IP1.htm'
 		### city = pitturgh, jobTitle = Software Engineer, lowerBound = 0, middleBound = 10, urlLocatiorStr[city] = _IM684_KO11,, upperBound = 28
-		url = 'http://www.glassdoor.com/Salaries/' + city + '-' + jobTitle + '-salary-SRCH_IL.' +lowerBound +',' +middleBound + urlLocatorStr[city] + upperBound + '_SDAS.htm'
+		url = 'http://www.glassdoor.com/Salaries/' + city + '-' + jobTitle + '-salary-SRCH_IL.' +lowerBound +',' +middleBound + urlLocatorStr[city] + ',' + upperBound + '_SDAS.htm'
 		page = requests.get(url, headers= hdr)
 		soup = BeautifulSoup(page.content, 'html.parser')
 
@@ -83,14 +88,17 @@ class getSalaries(webapp2.RequestHandler):
 
 				# print companyName + ' ' + companyJobTitle + ' '+ salary
 
+		nationalAvgSalary = 'none'
+		cityAvgSalary = 'none'
 
 		# get city Area Avg, and National Avg for salaries
 		avgSalaries = soup.find_all('div', class_='meanPay nowrap positive')
-		nationaAvgSalary = avgSalaries[0].get_text()
-		cityAvgSalary = avgSalaries[1].get_text()
-		
+		#nationaAvgSalary = avgSalaries[0].get_text()
+		#cityAvgSalary = avgSalaries[1].get_text()
+
+
 		salaryJSON = dict()
-		salaryJSON['nationaAvgSalary'] = nationaAvgSalary
+		salaryJSON['nationalAvgSalary'] = nationalAvgSalary
 		salaryJSON['cityAvgSalary'] = cityAvgSalary
 
 		results = dict()
