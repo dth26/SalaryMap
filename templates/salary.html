@@ -28,9 +28,9 @@
 
 
 <ul id="salaryList">
-	<li class="" ng-repeat="company in salaries track by $index">
+	<li class="" ng-repeat="company in salaries | filter:salaryForLocation  track by $index ">
 	<!-- 	<p> -->
-			<strong>[[$index+1]])</strong>
+			<strong>[[$index +1]])</strong>
 			<span class="highlight1">[[company.salary]]</span><span class="highlight2">[[company.companyName]]</span><br>
 			<span>[[company.jobTitle]]</span>
 	<!-- 	</p> -->
