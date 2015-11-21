@@ -22,8 +22,8 @@ html, body {
     margin: 0;
     margin-top: -5px;
     padding: 0;
-    z-index: 100;
-}
+  /*  z-index: 100;
+*/}
 
 
 .added-city{
@@ -79,12 +79,12 @@ div.col-sm-10, div.col-sm-2, .same-height-col{
     cursor: pointer;
 }
 .highlight1{
-    color: #4969D1;
+    color: black;
 }
 .highlight2{
     color: #525252;
 }
-.navbar-menu, .navbar-menu-right, .navbar-menu .row, .navbar-menu .container{
+.navbar-menu, .navbar-menu-right, .navbar-menu .row, .navbar-menu .container, .navbar-menu .container .row div:nth-child(1){
     min-height: 40px !important;
     height: 40px !important;
     line-height: 40px;
@@ -110,6 +110,9 @@ div.col-sm-10, div.col-sm-2, .same-height-col{
 #right-panel-menu{
     margin-bottom: 0px !important;
     padding-bottom: 0px !important;
+}
+#right-panel-menu li a{
+    color: #829EFA;
 }
 #right-panel-menu .active a{
     background-color: #3E60CF;
