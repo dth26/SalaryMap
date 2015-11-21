@@ -16,9 +16,9 @@ AngularApp.config(['$interpolateProvider', function($interpolateProvider) {
 
 var allLocations = [{
 	'Baltimore': {'state':'MD', 'city':'Baltimore','lat':39.2846225, 'lng':-76.7605701, 'selected':false},
-	'New York': {'state':'NY', 'city':'New York','lat': 40.7029741, 'lng':-74.2598655, 'selected':false},
+	'New York City': {'state':'', 'city':'New York','lat': 40.7029741, 'lng':-74.2598655, 'selected':false},
 	'Houston': {'state':'TX','city':'Houston','lat': 29.8168824, 'lng':-95.6814854, 'selected':false},
-	'Herndon': {'state':'VA','city':'Herndon','lat': 38.9709672, 'lng':-77.4069342, 'selected':false },
+	// 'Herndon': {'state':'VA','city':'Herndon','lat': 38.9709672, 'lng':-77.4069342, 'selected':false },
 	'Boston': {'state':'MA','city':'Boston','lat': 42.3132882, 'lng':-71.1972408, 'selected':false},
 	'Philadelphia': {'state':'PA', 'city':'Philadelphia','lat': 39.9496103, 'lng':-75.1502821, 'selected':false},
 	'Pittsburgh': {'state':'PA','city':'Pittsburgh','lat': 40.4624764, 'lng': -79.9300166, 'selected':false},

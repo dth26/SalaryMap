@@ -31,7 +31,7 @@ class getSalaries(webapp2.RequestHandler):
 			'houston': '_IM394_KO8',
 			'philadelphia': '_IM676_KO13',
 			'pittsburgh': '_IM684_KO11',
-			'new-york': '_IM615_KO14',
+			'new-york-city': '_IM615_KO14',
 			'san-francisco': '_IM759_KO14',
 			'washington-dc': '_IM911_KO14'
 		}

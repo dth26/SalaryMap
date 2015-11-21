@@ -1,7 +1,38 @@
 <select class="form-control" ng-model="salaryForLocation">
-  <option ng-repeat="l in userLocations">[[l]]</option>
+	<option ng-repeat="l in userLocations">[[l]]</option>
 </select>
 
+<style>
+#salaryList {
+	padding: 0px;
+}
+#salaryList li{
+	height: auto;
+	width: 99%;
+	border: 1px solid black;
+	margin-top: 3px;
+	margin-left: 2px;
+	font-size: 12px;
+}
+#salaryList li:nth-child(odd){
+	background-color: #E6E7EB;
+}
+#salaryList li:nth-child(even){
+	background-color: #F7F8FA;
+}
+#salaryList li span{
+	/*padding: 0px 2px 0px 2px;*/
+	margin: 0px 5px 0px 5px;
+}
+</style>
+
+
 <ul id="salaryList">
-	<li ng-repeat="s in salaries | filter:salaryForLocation"></li>
+	<li class="" ng-repeat="company in salaries track by $index">
+	<!-- 	<p> -->
+			<strong>[[$index+1]])</strong>
+			<span class="highlight1">[[company.salary]]</span><span class="highlight2">[[company.companyName]]</span><br>
+			<span>[[company.jobTitle]]</span>
+	<!-- 	</p> -->
+	</li>
 </ul>

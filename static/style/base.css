@@ -10,7 +10,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-
+    overflow: hidden;
 }
 
 #map-canvas {
@@ -20,6 +20,7 @@ html, body {
     width: 100%;
     height: 100%;
     margin: 0;
+    margin-top: -5px;
     padding: 0;
     z-index: 100;
 }
@@ -77,8 +78,22 @@ div.col-sm-10, div.col-sm-2, .same-height-col{
     color: red;
     cursor: pointer;
 }
-/* bootstrap */
-.navbar{
+.highlight1{
+    color: #4969D1;
+}
+.highlight2{
+    color: #525252;
+}
+.navbar-menu, .navbar-menu-right, .navbar-menu .row, .navbar-menu .container{
+    min-height: 40px !important;
+    height: 40px !important;
+    line-height: 40px;
+    z-index: 101;
+}
+.navbar-menu-right{
+    padding: 0px;
+}
+.navbar-menu{
     background-color: #333333;
 }
 
@@ -87,18 +102,30 @@ div.col-sm-10, div.col-sm-2, .same-height-col{
 }
 #right-panel{
     padding: 0px;
+    padding-top: 60px;
     border-left: 1px solid #ddd;  
+    overflow: scroll;
 }
+
 #right-panel-menu{
-    padding: 8px 2px 0px 2px;
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+}
+#right-panel-menu .active a{
+    background-color: #3E60CF;
+    color: white;
+    border-radius: 0px;
+    border-top: none;
+    border-bottom: none;
+    margin-top: -1px;
 }
 .right-panel-form{
-    max-width:400px;
-    margin:50px auto;
+  /*  max-width:400px;
+    margin:50px auto;*/
     background:#fff;
     border-radius:2px;
     padding: 10px;
-    font-family: Georgia, "Times New Roman", Times, serif;
+   /* font-family: Georgia, "Times New Roman", Times, serif;*/
 }
 .right-panel-form h1{
     display: block;
@@ -212,12 +239,12 @@ div.col-sm-10, div.col-sm-2, .same-height-col{
 }
 #title{
     position: absolute;
-    top: 50%;
+/*    top: 50%;
     transform: translate(-0%, -50%);
     -webkit-transform: translate(-0%, -50%);
     -moz-transform: translate(-0%, -50%);
     -o-transform: translate(-0%, -50%);
-    -ms-transform: translate(-0%, -50%);
+    -ms-transform: translate(-0%, -50%);*/
     color: #858585;
     float: left;
     font-weight: 600;

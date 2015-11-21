@@ -14,27 +14,33 @@
 
 
 	<body ng-init="loadAllLocationsToScreen()">
-        <nav class="navbar navbar-default navbar-fixed-top" style="min-height: 40px !important;">
-            <div class="container">
-                <p id="title">SalaryMap</p>
+        <nav class="navbar navbar-default navbar-fixed-top navbar-menu">
+            <div class="container" style="margin: 0px !important; width: 100%;">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <p id="title">SalaryMap</p>
+                    </div>
+                    <div class="col-sm-2 navbar-menu-right">
+                        <ul class="nav nav-tabs" id="right-panel-menu">
+                          <li role="presentation" class="active" data-tab="filter"><a href="">Filter</a></li>
+                          <li role="presentation" data-tab="salary"><a href="">Salary</a></li>
+                          <li role="presentation"><a href="#">Other</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </nav>
         <!-- START 'container-fluid' -->
-        <div class="container-fluid" style="margin-top: 40px !important;">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-10 same-height-col">
                     <div id="map-canvas"></div>
                 </div>
                 <div class="col-sm-2 same-height-col" id="right-panel"  ng-controller="locations">
-                    <ul class="nav nav-tabs" id="right-panel-menu">
-                      <li role="presentation" class="active" data-tab="filter"><a href="#">Filter</a></li>
-                      <li role="presentation" data-tab="salary"><a href="#">Salary</a></li>
-                      <li role="presentation"><a href="#">Other</a></li>
-                    </ul>
                     <div id="filterContent">
                         {% include "filter.html" %}
                     </div>
-                    <div id="salaryContent" style="display:none">
+                    <div id="salaryContent" style="display:none" ng-controller="salaryCtrl">
                         {% include "salary.html" %}
                     </div>
                 </div> 
@@ -58,6 +64,7 @@
     <script type="text/javascript" src="/js/geocoding.js"></script>
     <script type="text/javascript" src="/js/maps.js"></script>
     <script type="text/javascript" src="/js/jobs.js"></script>
+    <script type="text/javascript" src="/js/salary.js"></script>
     <!-- <script type="text/javascript" src="http://api.glassdoor.com/api/api.htm?t.p=47182&t.k=ckMc41ydCN9&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnStates=true&admLevelRequested=1&callback=getJobsCallback"> -->
 
 

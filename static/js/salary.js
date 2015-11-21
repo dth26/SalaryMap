@@ -2,8 +2,12 @@
 
 AngularApp.controller('salaryCtrl', function($scope){
 
-	// locations selected by 
-	$scope.userLocations = []
+	$scope.salaries = [];
 
+	$scope.addSalary = function(companyData){
 
+		$scope.$apply(function(){
+			$scope.salaries.push(companyData);
+		});
+	}
 });
