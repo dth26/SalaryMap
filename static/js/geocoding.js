@@ -77,13 +77,24 @@ function getAddressOfBusiness(companyData){
             // printJSON(place);
             
         }
-        else if (status ===  google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {  
-            // Wait 200 ms and run request again if PlacesService returns over query limit 
-            // setTimeout(function() {
-            //     getAddressOfBusiness(companyData);
-            // }, 200);
+        else if (status ===  google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) { 
+        //    Wait 200 ms and run request again if PlacesService returns over query limit 
+            setTimeout(function() {
 
-            alert("Reached GooglePlacesService Query Limit for today: increase requests limit");
+                // if(iteration=='undefined'){
+                //     var iteration = 0 
+                //     console.log('iteration is undefined');
+                // }
+                // if(iteration++ > 3){
+                //     return;
+                // }
+     
+                getAddressOfBusiness(companyData);
+            }, 200);
+
+            console.log("Reached GooglePlacesService Query Limit for today: increase requests limit");
+            alert("Reached GooglePlacesService Query Limit for today: increase requests limit"); 
+
         }
         else{
 
@@ -98,19 +109,34 @@ function getAddressOfBusiness(companyData){
 }
 
 
+var gMarkers = [];
+
+
 /* 
     set marker on google maps of current location 
 */
 function addMarker(companyData){
 
+    var image = {
+      url: '../static/images/green.png',
+      size: new google.maps.Size(16, 16),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(0, 0),
+      scaledSize: new google.maps.Size(15, 15)
+    };
+
     var marker = new google.maps.Marker({
         position: companyData.coordinates,
         map: map,
-        title: companyData.companyName
+        title: companyData.companyName,
+        icon: image
     });
+
 
    // printJSON(companyData);
 
+   // save markers into global to access for on click salary
+   gMarkers.push(marker);
 
     var infowindow = new google.maps.InfoWindow({
         content: companyData.companyName + '<br>' + companyData.jobTitle + '<br><b>' + companyData.salary + '</b>' 
