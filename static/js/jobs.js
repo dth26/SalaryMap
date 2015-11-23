@@ -67,6 +67,11 @@ function requestToGlassdoor(params){
 function getJobs(){
 	var jobTitle = $.trim($('#searchPhraseIn').val());
 
+	if(jobTitle == ''){
+		alert('You must fill out Job Title!');
+		return;
+	}
+
 	var locationsElement = document.getElementById('filterContent');
 	var locationsCtrl = angular.element(locationsElement).scope();
 	var totalLoc = locations.length;					// total number of cities user wants searched

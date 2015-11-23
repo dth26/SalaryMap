@@ -105,6 +105,9 @@ div.col-sm-10, div.col-sm-2, .same-height-col{
     padding-top: 60px;
     border-left: 1px solid #ddd;  
     overflow: scroll;
+    -webkit-box-shadow: -1px 2px 5px 0px rgba(0,0,0,0.4);
+-moz-box-shadow: -1px 2px 5px 0px rgba(0,0,0,0.4);
+box-shadow: -1px 2px 5px 0px rgba(0,0,0,0.4);
 }
 
 #right-panel-menu{
