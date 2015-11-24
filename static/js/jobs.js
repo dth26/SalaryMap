@@ -84,6 +84,9 @@ function getJobs(){
 	$('#salaryContent').show();
 
 	scrapeGlassdoor(0, totalLoc, jobTitle, locations);
+
+	// clear gMarkers
+	gMarkers = [];
 }
 
 
@@ -123,12 +126,12 @@ function scrapeGlassdoor(curr, totalLoc, jobTitle){
 					'companyName': companies[i].companyName
 				};
 
-				// push companyData to salaries controller
+	            getAddressOfBusiness(companyData);
+
+	            // push companyData to salaries controller
 				var salaryElement = document.getElementById('salaryContent');
 				var salaryCtrl = angular.element(salaryElement).scope();
 				salaryCtrl.addSalary(companyData);
-
-	            getAddressOfBusiness(companyData);
 			}
 
 			// scrape all locations that user selects

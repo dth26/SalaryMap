@@ -24,11 +24,16 @@
 	/*padding: 0px 2px 0px 2px;*/
 	margin: 0px 5px 0px 5px;
 }
+
+#salaryList a{
+	cursor: pointer;
+}
 </style>
 
 
+
 <ul id="salaryList">
-	<a href="javascript:google.maps.event.trigger(gmarkers[0],'click');" ng-repeat="company in salaries | filter:salaryForLocation  track by $index ">
+	<a class="" ng-click="bounceMarker(company.i)" ng-repeat="company in salaries | filter:salaryForLocation  track by $index ">
 	<li class="">
 	<!-- 	<p> -->
 			<strong>[[$index +1]])</strong>

@@ -109,8 +109,6 @@ function getAddressOfBusiness(companyData){
 }
 
 
-var gMarkers = [];
-
 
 /* 
     set marker on google maps of current location 
@@ -122,21 +120,23 @@ function addMarker(companyData){
       size: new google.maps.Size(16, 16),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(0, 0),
-      scaledSize: new google.maps.Size(15, 15)
+      scaledSize: new google.maps.Size(10, 10)
     };
 
     var marker = new google.maps.Marker({
         position: companyData.coordinates,
         map: map,
         title: companyData.companyName,
+        animation: null,
         icon: image
     });
 
 
    // printJSON(companyData);
 
-   // save markers into global to access for on click salary
-   gMarkers.push(marker);
+    // save markers into global to access for on click salary
+    gMarkers.push(marker);
+
 
     var infowindow = new google.maps.InfoWindow({
         content: companyData.companyName + '<br>' + companyData.jobTitle + '<br><b>' + companyData.salary + '</b>' 

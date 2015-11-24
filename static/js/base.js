@@ -3,6 +3,9 @@ var GOOGLE_KEY = 'AIzaSyDsnaGf5pCVRpo5hCpcBfOq0J5Vdzj8DLY';
 // list of cities that the user wants to search for job in
 var locations = [];
 
+// keep a list of references to the markers
+var gMarkers = [];
+
 
 var AngularApp = angular.module('salaryMap',[]);
 AngularApp.config(['$interpolateProvider', function($interpolateProvider) {
@@ -67,10 +70,10 @@ AngularApp.controller('locations', function($scope){
 	$scope.loadUserSelectedLocations = function(city){
 
 		$scope.$apply(function(){
+			//city 
 			$scope.userLocations.push(city);
 		});
 
-		alert($scope.userLocations);
 	}
 	
 	$scope.handleLocation = function($event){
