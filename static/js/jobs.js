@@ -128,10 +128,10 @@ function scrapeGlassdoor(curr, totalLoc, jobTitle){
 
 	            getAddressOfBusiness(companyData);
 
-	            // push companyData to salaries controller
-				var salaryElement = document.getElementById('salaryContent');
-				var salaryCtrl = angular.element(salaryElement).scope();
-				salaryCtrl.addSalary(companyData);
+	   //          // push companyData to salaries controller
+				// var salaryElement = document.getElementById('salaryContent');
+				// var salaryCtrl = angular.element(salaryElement).scope();
+				// salaryCtrl.addSalary(companyData);
 			}
 
 			// scrape all locations that user selects

@@ -6,7 +6,8 @@ AngularApp.controller('salaryCtrl', function($scope){
 
 	$scope.addSalary = function(companyData){
 
-		companyData['i'] = gMarkers.length;
+		companyData['i'] = gMarkers.length-1;
+		alert(companyData['i'] );
 
 
 		$scope.$apply(function(){

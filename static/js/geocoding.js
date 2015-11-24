@@ -120,7 +120,7 @@ function addMarker(companyData){
       size: new google.maps.Size(16, 16),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(0, 0),
-      scaledSize: new google.maps.Size(10, 10)
+      scaledSize: new google.maps.Size(14, 14)
     };
 
     var marker = new google.maps.Marker({
@@ -136,6 +136,12 @@ function addMarker(companyData){
 
     // save markers into global to access for on click salary
     gMarkers.push(marker);
+
+    // push companyData to salaries controller
+    var salaryElement = document.getElementById('salaryContent');
+    var salaryCtrl = angular.element(salaryElement).scope();
+    salaryCtrl.addSalary(companyData);
+
 
 
     var infowindow = new google.maps.InfoWindow({
