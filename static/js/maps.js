@@ -45,17 +45,11 @@ function initialize(position) {
         scrollwheel: false
     };
 
-   // var menuHeight = $('#header').height() + $('#header2').height();
-   // $('#map-canvas').css('height', $(window).height() +'px');
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-   // getAddressOfBusiness('Pi', 'intermedix');
-    //getAddressOfBusiness('philadelphia', 'Wells Fargo');
-
-
-    // add your current location to map
-   // addMarker(yourLatlng,'You','');
-
 }
 
 
+function setCenter(lat, lng){
+    map.panTo(new google.maps.LatLng(lat, lng));
+    map.setZoom(15);
+}

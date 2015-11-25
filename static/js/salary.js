@@ -7,7 +7,7 @@ AngularApp.controller('salaryCtrl', function($scope){
 	$scope.addSalary = function(companyData){
 
 		companyData['i'] = gMarkers.length-1;
-		alert(companyData['i'] );
+		//alert(companyData['i'] );
 
 
 		$scope.$apply(function(){
@@ -15,19 +15,17 @@ AngularApp.controller('salaryCtrl', function($scope){
 		});
 	}
 
-	$scope.bounceMarker = function(i){
-	//		alert(i);
-
-	//	alert(gMarkers.length);
+	$scope.bounceMarker = function(i, lat, lng){
 
 		if (gMarkers[i].getAnimation() !== null) {
 			gMarkers[i].setAnimation(null);
 		} else {
 			gMarkers[i].setAnimation(google.maps.Animation.BOUNCE);
-
+	
+			setCenter(lat, lng);
 			setTimeout(function(){
 				gMarkers[i].setAnimation(null);
-			}, 4000);
+			}, 3000);
 		}
 
 	}

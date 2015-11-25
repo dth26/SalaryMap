@@ -12,7 +12,18 @@ function getCoordinates(companyData)
     geocoder.geocode({'address': companyData.vicinity}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
 
+           // printJSON(results[0].geometry.location);
+
             companyData['coordinates'] = results[0].geometry.location;
+
+            var coors = String(results[0].geometry.location);
+            var indexOfComma = coors.indexOf(',');
+            var lat = coors.substring(1,indexOfComma);
+            var lng = coors.substring(indexOfComma+1, coors.length-1);
+            companyData['lat'] = lat;
+            companyData['lng'] = lng;
+            //alert(lat + ' ' + lng);
+
             addMarker(companyData);
 
         } 
@@ -123,8 +134,11 @@ function addMarker(companyData){
       scaledSize: new google.maps.Size(14, 14)
     };
 
+   // alert(companyData.coordinates);
+
     var marker = new google.maps.Marker({
-        position: companyData.coordinates,
+        // position: companyData.coordinates,
+        position: new google.maps.LatLng(companyData.lat, companyData.lng),
         map: map,
         title: companyData.companyName,
         animation: null,
@@ -136,6 +150,7 @@ function addMarker(companyData){
 
     // save markers into global to access for on click salary
     gMarkers.push(marker);
+
 
     // push companyData to salaries controller
     var salaryElement = document.getElementById('salaryContent');

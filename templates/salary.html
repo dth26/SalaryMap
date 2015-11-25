@@ -33,7 +33,7 @@
 
 
 <ul id="salaryList">
-	<a class="" ng-click="bounceMarker([[company.i]])" ng-repeat="company in salaries | filter:salaryForLocation  track by $index ">
+	<a class="" ng-click="bounceMarker([[company.i]],[[company.lat]],[[company.lng]])" ng-repeat="company in salaries | filter:salaryForLocation  track by $index ">
 	<li class="">
 	<!-- 	<p> -->
 			<strong>[[$index +1]])</strong>
